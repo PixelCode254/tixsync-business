@@ -39,7 +39,7 @@ export default function AdminTeam() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div><h1 className="text-2xl font-bold text-white">Team</h1><p className="text-sm text-surface-500">{members.length} members</p></div>
-        <button onClick={() => { setEditing(null); setForm({ name: "", role: "", bio: "", image: "", linkedin: "", email: "" }); setShowForm(true); }} className="btn-primary text-sm">
+        <button onClick={() => { setEditing(null); setForm({ name: "", role: "", bio: "", imageUrl: "", linkedin: "", email: "" }); setShowForm(true); }} className="btn-primary text-sm">
           <Plus className="h-4 w-4" /> Add Member
         </button>
       </div>
