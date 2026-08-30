@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Briefcase, Users, MessageSquare, FileText, LogOut } from "lucide-react";
+import { LayoutDashboard, Briefcase, Users, MessageSquare, FileText, LogOut, Settings } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,7 @@ const links = [
   { label: "Team", href: "/admin/team", icon: Users },
   { label: "Projects", href: "/admin/projects", icon: FileText },
   { label: "Messages", href: "/admin/messages", icon: MessageSquare },
+  { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
