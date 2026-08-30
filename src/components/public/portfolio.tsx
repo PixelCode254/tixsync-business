@@ -39,7 +39,7 @@ export function Portfolio() {
   const [projects, setProjects] = useState<Project[]>(fallback);
 
   useEffect(() => {
-    fetch("/api/projects?featured=true").then(r => r.json()).then(d => {
+    fetch("/api/projects").then(r => r.json()).then(d => {
       if (d.projects?.length) setProjects(d.projects);
     }).catch(() => {});
   }, []);

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
-import { Navbar } from "@/components/ui/navbar";
-import { Footer } from "@/components/ui/footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -45,16 +43,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               email: "info@tixsyncsolutions.com",
               telephone: "+254704440164",
               address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
-              sameAs: ["https://github.com", "https://linkedin.com", "https://twitter.com"],
+              sameAs: ["https://github.com/PixelCode254", "https://linkedin.com/in/corneliusmaina", "https://twitter.com/corneliusmaina"],
               description: "Enterprise-grade web development, cybersecurity, and cloud infrastructure solutions.",
             }),
           }}
         />
       </head>
       <body className="min-h-screen bg-surface-950">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

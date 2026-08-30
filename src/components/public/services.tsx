@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Shield, Code, Cloud, Lock, Laptop } from "lucide-react";
+import { ArrowRight, Shield, Code, Cloud, Lock, Laptop, Globe, Building, Database, Monitor, Zap, Server, Key, Briefcase } from "lucide-react";
 
 type Service = {
   id: string; title: string; slug: string; icon: string | null;
@@ -11,7 +11,7 @@ type Service = {
 };
 
 const iconMap: Record<string, React.ElementType> = {
-  Shield, Code, Cloud, Lock, Laptop,
+  Shield, Code, Cloud, Lock, Laptop, Globe, Building, Database, Monitor, Zap, Server, Key, Briefcase,
 };
 
 const fallback: Service[] = [

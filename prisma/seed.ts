@@ -1,11 +1,8 @@
 import { PrismaClient, ProjectCategory } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { slugify } from "../src/lib/utils";
 
 const prisma = new PrismaClient();
-
-function slugify(text: string) {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}
 
 async function main() {
   console.log("Seeding TIXSYNC BUSINESS database...");

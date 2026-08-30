@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, GripVertical, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Service { id: string; title: string; description: string; icon: string; features: string[]; order: number; published: boolean; }
+interface Service { id: string; title: string; description: string; icon: string; features: string[]; price: string | null; order: number; published: boolean; }
 
 const ICONS = ["Shield", "Globe", "Cloud", "Building", "Lock", "Database", "Monitor", "Zap", "Server", "Key"];
 
@@ -12,7 +12,7 @@ export default function AdminServices() {
   const [services, setServices] = useState<Service[]>([]);
   const [editing, setEditing] = useState<Service | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: "", description: "", icon: "Shield", features: "" });
+  const [form, setForm] = useState({ title: "", description: "", icon: "Shield", features: "", price: "" });
 
   const load = async () => {
     const res = await fetch("/api/services");
@@ -22,13 +22,13 @@ export default function AdminServices() {
   useEffect(() => { load(); }, []);
 
   const save = async () => {
-    const payload = { ...form, features: form.features.split(",").map(f => f.trim()).filter(Boolean), order: editing?.order || services.length };
+    const payload = { ...form, features: form.features.split(",").map(f => f.trim()).filter(Boolean), order: editing?.order || services.length, price: form.price || null };
     if (editing) {
       await fetch("/api/services", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: editing.id, ...payload, published: editing.published }) });
     } else {
       await fetch("/api/services", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload, published: true }) });
     }
-    setShowForm(false); setEditing(null); setForm({ title: "", description: "", icon: "Shield", features: "" }); load();
+    setShowForm(false); setEditing(null); setForm({ title: "", description: "", icon: "Shield", features: "", price: "" }); load();
   };
 
   const del = async (id: string) => {
@@ -41,7 +41,7 @@ export default function AdminServices() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div><h1 className="text-2xl font-bold text-white">Services</h1><p className="text-sm text-surface-500">{services.length} services</p></div>
-        <button onClick={() => { setEditing(null); setForm({ title: "", description: "", icon: "Shield", features: "" }); setShowForm(true); }} className="btn-primary text-sm">
+        <button onClick={() => { setEditing(null); setForm({ title: "", description: "", icon: "Shield", features: "", price: "" }); setShowForm(true); }} className="btn-primary text-sm">
           <Plus className="h-4 w-4" /> Add Service
         </button>
       </div>
@@ -57,7 +57,7 @@ export default function AdminServices() {
             <span className={`text-xs px-2 py-0.5 rounded-full ${s.published ? "bg-emerald-500/10 text-emerald-400" : "bg-surface-500/10 text-surface-500"}`}>
               {s.published ? "Published" : "Draft"}
             </span>
-            <button onClick={() => { setEditing(s); setForm({ title: s.title, description: s.description, icon: s.icon, features: s.features.join(", ") }); setShowForm(true); }} className="text-surface-400 hover:text-white"><Pencil className="h-4 w-4" /></button>
+            <button onClick={() => { setEditing(s); setForm({ title: s.title, description: s.description, icon: s.icon, features: s.features.join(", "), price: s.price || "" }); setShowForm(true); }} className="text-surface-400 hover:text-white"><Pencil className="h-4 w-4" /></button>
             <button onClick={() => del(s.id)} className="text-surface-400 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
           </div>
         ))}
@@ -89,6 +89,11 @@ export default function AdminServices() {
                     className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white outline-none focus:border-brand-500/50">
                     {ICONS.map(i => <option key={i} value={i} className="bg-surface-900">{i}</option>)}
                   </select>
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-xs font-medium text-surface-400">Price</label>
+                  <input value={form.price} onChange={e => setForm({ ...form, price: e.target.value })}
+                    className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-surface-600 outline-none focus:border-brand-500/50" placeholder="e.g. From KES 150,000 or Custom" />
                 </div>
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-surface-400">Features (comma-separated)</label>

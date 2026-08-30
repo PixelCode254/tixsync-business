@@ -71,8 +71,8 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-white mb-4">Connect</h4>
             <div className="flex gap-2 mb-6">
               {[
-                { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-                { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+                { icon: Linkedin, href: "https://linkedin.com/in/corneliusmaina", label: "LinkedIn" },
+                { icon: Twitter, href: "https://twitter.com/corneliusmaina", label: "Twitter" },
                 { icon: MessageCircle, href: "https://wa.me/254704440164", label: "WhatsApp" },
               ].map(({ icon: Icon, href, label }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}

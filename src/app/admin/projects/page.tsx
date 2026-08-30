@@ -18,7 +18,7 @@ export default function AdminProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [editing, setEditing] = useState<Project | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: "", description: "", category: "WEB_DEVELOPMENT", imageUrl: "", techStack: "", liveUrl: "", featured: false });
+  const [form, setForm] = useState({ title: "", description: "", category: "WEB_DEVELOPMENT", imageUrl: "", techStack: "", liveUrl: "", githubUrl: "", content: "", featured: false });
 
   const load = async () => {
     const res = await fetch("/api/projects");
@@ -28,13 +28,13 @@ export default function AdminProjects() {
   useEffect(() => { load(); }, []);
 
   const save = async () => {
-    const payload = { ...form, techStack: form.techStack.split(",").map(t => t.trim()).filter(Boolean), order: editing?.order || projects.length };
+    const payload = { ...form, techStack: form.techStack.split(",").map(t => t.trim()).filter(Boolean), order: editing?.order || projects.length, githubUrl: form.githubUrl || null, content: form.content || null };
     if (editing) {
       await fetch("/api/projects", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: editing.id, ...payload, published: editing.published }) });
     } else {
       await fetch("/api/projects", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload, published: true }) });
     }
-    setShowForm(false); setEditing(null); setForm({ title: "", description: "", category: "WEB_DEVELOPMENT", imageUrl: "", techStack: "", liveUrl: "", featured: false }); load();
+    setShowForm(false); setEditing(null); setForm({ title: "", description: "", category: "WEB_DEVELOPMENT", imageUrl: "", techStack: "", liveUrl: "", githubUrl: "", content: "", featured: false }); load();
   };
 
   const del = async (id: string) => {
@@ -47,7 +47,7 @@ export default function AdminProjects() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div><h1 className="text-2xl font-bold text-white">Projects</h1><p className="text-sm text-surface-500">{projects.length} projects</p></div>
-        <button onClick={() => { setEditing(null); setForm({ title: "", description: "", category: "WEB_DEVELOPMENT", imageUrl: "", techStack: "", liveUrl: "", featured: false }); setShowForm(true); }} className="btn-primary text-sm">
+        <button onClick={() => { setEditing(null); setForm({ title: "", description: "", category: "WEB_DEVELOPMENT", imageUrl: "", techStack: "", liveUrl: "", githubUrl: "", content: "", featured: false }); setShowForm(true); }} className="btn-primary text-sm">
           <Plus className="h-4 w-4" /> Add Project
         </button>
       </div>
@@ -64,7 +64,7 @@ export default function AdminProjects() {
             </div>
             <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400">{CATEGORIES.find(c => c.value === p.category)?.label || p.category}</span>
             {p.liveUrl && <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="text-surface-400 hover:text-brand-400"><ExternalLink className="h-4 w-4" /></a>}
-                <button onClick={() => { setEditing(p); setForm({ title: p.title, description: p.description, category: p.category, imageUrl: p.imageUrl || "", techStack: p.techStack.join(", "), liveUrl: p.liveUrl || "", featured: p.featured }); setShowForm(true); }} className="text-surface-400 hover:text-white"><Pencil className="h-4 w-4" /></button>
+                <button onClick={() => { setEditing(p); setForm({ title: p.title, description: p.description, category: p.category, imageUrl: p.imageUrl || "", techStack: p.techStack.join(", "), liveUrl: p.liveUrl || "", githubUrl: (p as any).githubUrl || "", content: (p as any).content || "", featured: p.featured }); setShowForm(true); }} className="text-surface-400 hover:text-white"><Pencil className="h-4 w-4" /></button>
             <button onClick={() => del(p.id)} className="text-surface-400 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
           </div>
         ))}
@@ -93,6 +93,10 @@ export default function AdminProjects() {
                   <input value={form.techStack} onChange={e => setForm({ ...form, techStack: e.target.value })} className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-surface-600 outline-none focus:border-brand-500/50" placeholder="Next.js, TypeScript, Prisma" /></div>
                 <div><label className="mb-1.5 block text-xs font-medium text-surface-400">Live URL</label>
                   <input value={form.liveUrl} onChange={e => setForm({ ...form, liveUrl: e.target.value })} className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-surface-600 outline-none focus:border-brand-500/50" /></div>
+                <div><label className="mb-1.5 block text-xs font-medium text-surface-400">GitHub URL</label>
+                  <input value={form.githubUrl} onChange={e => setForm({ ...form, githubUrl: e.target.value })} className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-surface-600 outline-none focus:border-brand-500/50" placeholder="https://github.com/..." /></div>
+                <div><label className="mb-1.5 block text-xs font-medium text-surface-400">Content (Markdown)</label>
+                  <textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={4} className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-surface-600 outline-none focus:border-brand-500/50 resize-none" placeholder="Detailed project description or case study content..." /></div>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={form.featured} onChange={e => setForm({ ...form, featured: e.target.checked })} className="rounded border-white/10 bg-white/[0.03] text-brand-500 focus:ring-brand-500/20" />
                   <span className="text-sm text-surface-400">Featured project</span>

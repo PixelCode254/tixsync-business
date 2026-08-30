@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { contactSchema } from "@/lib/validations";
 import { sendEmail, buildAutoReplyHtml, buildAdminNotificationHtml } from "@/lib/email";
 
+// NOTE: This in-memory rate limiter is ineffective on Vercel serverless because each
+// serverless function instance has its own isolated memory. Use an external store
+// (e.g. Redis, Upstash, or Vercel KV) for production rate limiting.
 const submissions = new Map<string, number[]>();
 const RATE_LIMIT = 60 * 1000;
 const MAX = 5;
@@ -67,6 +72,8 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "20");
