@@ -11,7 +11,8 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.19.0",
@@ -28,7 +29,7 @@
     "lucide-react": "^0.441.0",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
-    "nodemailer": "^6.9.0",
+    "nodemailer": "^7.0.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
