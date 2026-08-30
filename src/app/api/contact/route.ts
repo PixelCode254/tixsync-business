@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       await sendEmail({
         to: adminEmail,
         subject: `[New Lead] ${subject || name.trim()} — TIXSYNC`,
-        html: buildAdminNotificationHtml(name.trim(), email.trim().toLowerCase(), subject || null, message.trim(), company),
+        html: buildAdminNotificationHtml(name.trim(), email.trim().toLowerCase(), subject ?? null, message.trim(), company ?? null),
       });
     }
 
