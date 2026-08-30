@@ -47,7 +47,7 @@ export default function AdminProjects() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div><h1 className="text-2xl font-bold text-white">Projects</h1><p className="text-sm text-surface-500">{projects.length} projects</p></div>
-        <button onClick={() => { setEditing(null); setForm({ title: "", description: "", category: "WEB_DEVELOPMENT", image: "", techStack: "", liveUrl: "", featured: false }); setShowForm(true); }} className="btn-primary text-sm">
+        <button onClick={() => { setEditing(null); setForm({ title: "", description: "", category: "WEB_DEVELOPMENT", imageUrl: "", techStack: "", liveUrl: "", featured: false }); setShowForm(true); }} className="btn-primary text-sm">
           <Plus className="h-4 w-4" /> Add Project
         </button>
       </div>
