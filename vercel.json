@@ -5,19 +5,5 @@
       "src": "package.json",
       "use": "@vercel/next"
     }
-  ],
-  "env": {
-    "DATABASE_URL": "@database-url",
-    "NEXTAUTH_SECRET": "@nextauth-secret",
-    "NEXTAUTH_URL": "https://tixsyncsolutions.com",
-    "API_SECRET_KEY": "@api-secret-key",
-    "CORS_ORIGINS": "https://tixsync.com,https://www.tixsync.com",
-    "SMTP_HOST": "smtp.gmail.com",
-    "SMTP_PORT": "587",
-    "SMTP_USER": "tixsyncsolutions@gmail.com",
-    "SMTP_PASS": "@smtp-pass",
-    "SMTP_FROM": "TIXSYNC SOLUTIONS <tixsyncsolutions@gmail.com>",
-    "RESEND_API_KEY": "@resend-api-key",
-    "RESEND_FROM": "TIXSYNC <onboarding@resend.dev>"
-  }
+  ]
 }
