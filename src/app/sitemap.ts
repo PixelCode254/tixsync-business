@@ -12,6 +12,16 @@ async function getBlogSlugs(): Promise<string[]> {
   }
 }
 
+async function getProjectSlugs(): Promise<string[]> {
+  try {
+    const res = await fetch(`${BASE_URL}/api/projects`, { cache: "no-store" });
+    const data = await res.json();
+    return (data.projects || []).map((p: { slug: string }) => p.slug);
+  } catch {
+    return [];
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
@@ -29,7 +39,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/terms`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const blogSlugs = await getBlogSlugs();
+  const [blogSlugs, projectSlugs] = await Promise.all([
+    getBlogSlugs(),
+    getProjectSlugs(),
+  ]);
+
   const blogPages: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
     url: `${BASE_URL}/blog/${slug}`,
     lastModified: new Date(),
@@ -37,5 +51,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...blogPages];
+  const projectPages: MetadataRoute.Sitemap = projectSlugs.map((slug) => ({
+    url: `${BASE_URL}/portfolio/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...blogPages, ...projectPages];
 }

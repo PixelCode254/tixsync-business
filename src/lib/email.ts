@@ -1,6 +1,15 @@
 import nodemailer from "nodemailer";
 import { Resend } from "resend";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT || "587"),
@@ -64,8 +73,8 @@ export function buildAutoReplyHtml(name: string) {
     .ftx{font-size:12px;color:#495057}
     .cta{display:inline-block;background:#1a5cf5;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-weight:500;font-size:14px;margin:16px 0}
   </style></head><body><div class="c"><div class="h"><div class="logo"><div class="lb"><span class="lt">T</span></div><div><div class="br">TIXSYNC SOLUTIONS</div><div class="tg">Enterprise Digital Solutions</div></div></div></div>
-  <div class="title">Thank You, ${name}!</div><div class="dv"></div>
-  <div class="msg"><p>Hi <span class="hl">${name}</span>,</p><p>We've received your inquiry and our team will review it within <span class="hl">24 hours</span>. A dedicated account manager will reach out to discuss your project requirements.</p><p>For urgent matters, contact us directly at <span class="hl">+254 704 440 164</span>.</p></div>
+  <div class="title">Thank You, ${escapeHtml(name)}!</div><div class="dv"></div>
+  <div class="msg"><p>Hi <span class="hl">${escapeHtml(name)}</span>,</p><p>We've received your inquiry and our team will review it within <span class="hl">24 hours</span>. A dedicated account manager will reach out to discuss your project requirements.</p><p>For urgent matters, contact us directly at <span class="hl">+254 704 440 164</span>.</p></div>
   <div style="text-align:center"><a href="https://tixsyncsolutions.com" class="cta">Visit Our Website</a></div>
   <div class="ft"><p class="ftx">TIXSYNC SOLUTIONS<br>Enterprise Digital Solutions · Cybersecurity · Cloud Infrastructure</p></div></div></body></html>`;
 }
@@ -81,9 +90,9 @@ export function buildAdminNotificationHtml(name: string, email: string, subject:
     .fv{font-size:14px;color:#e6e6e6;margin-bottom:12px}
     .mb{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:16px;font-size:14px;line-height:1.6;color:#ced4da;white-space:pre-wrap}
   </style></head><body><div class="c"><div class="badge">New Lead</div><div class="title">New Contact Inquiry</div><div class="dv"></div>
-  <div class="fl">From</div><div class="fv">${name} &lt;${email}&gt;${company ? ` — ${company}` : ""}</div>
-  <div class="fl">Subject</div><div class="fv">${subject || "(No subject)"}</div>
-  <div class="fl">Message</div><div class="mb">${message}</div>
+  <div class="fl">From</div><div class="fv">${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;${company ? ` — ${escapeHtml(company)}` : ""}</div>
+  <div class="fl">Subject</div><div class="fv">${escapeHtml(subject || "(No subject)")}</div>
+  <div class="fl">Message</div><div class="mb">${escapeHtml(message)}</div>
   </div></body></html>`;
 }
 
@@ -109,8 +118,8 @@ export function buildReplyHtml(clientName: string, clientSubject: string | null,
     .ftx{font-size:12px;color:#495057}
   </style></head><body><div class="c"><div class="h"><div class="logo"><div class="lb"><span class="lt">T</span></div><div><div class="br">TIXSYNC SOLUTIONS</div><div class="tg">Enterprise Digital Solutions</div></div></div></div>
   <div class="title">Reply to Your Inquiry</div><div class="dv"></div>
-  <div class="rb"><p>Hi <span class="hl">${clientName}</span>,</p>${replyMessage.split("\n").map(l => `<p>${l}</p>`).join("")}
+  <div class="rb"><p>Hi <span class="hl">${escapeHtml(clientName)}</span>,</p>${replyMessage.split("\n").map(l => `<p>${escapeHtml(l)}</p>`).join("")}
   <p style="margin-top:16px">If you have further questions, reply to this email or call us at +254 704 440 164.</p></div>
-  <div class="qs"><div class="ql">Your original message${clientSubject ? ` — ${clientSubject}` : ""}</div><div class="qt">${quoted}</div></div>
+  <div class="qs"><div class="ql">Your original message${clientSubject ? ` — ${escapeHtml(clientSubject)}` : ""}</div><div class="qt">${quoted}</div></div>
   <div class="ft"><p class="ftx">TIXSYNC SOLUTIONS · info@tixsyncsolutions.com · +254 704 440 164</p></div></div></body></html>`;
 }

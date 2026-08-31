@@ -4,6 +4,17 @@ import Link from "next/link";
 import prisma from "@/lib/prisma";
 import { ArrowLeft, Clock, Tag, User } from "lucide-react";
 
+function sanitizeHtml(html: string): string {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/on\w+="[^"]*"/gi, "")
+    .replace(/on\w+='[^']*'/gi, "")
+    .replace(/javascript:/gi, "")
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
+    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, "")
+    .replace(/<embed\b[^>]*\/?>/gi, "");
+}
+
 interface BlogPostPageProps {
   params: { slug: string };
 }
@@ -145,7 +156,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div
           className="prose-custom"
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(htmlContent) }}
         />
       </article>
 

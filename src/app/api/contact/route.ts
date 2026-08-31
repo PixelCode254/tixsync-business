@@ -5,6 +5,15 @@ import prisma from "@/lib/prisma";
 import { contactSchema } from "@/lib/validations";
 import { sendEmail, buildAdminNotificationHtml } from "@/lib/email";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function detectIntent(message: string): string {
   const lower = message.toLowerCase();
   if (["price","pricing","cost","quote","budget","how much","rates","charges","fee","affordable","expensive","estimate"].some((k) => lower.includes(k))) return "pricing";
@@ -41,8 +50,8 @@ function buildSmartAutoReplyHtml(name: string, message: string): string {
     .ftx{font-size:12px;color:#495057}
     .cta{display:inline-block;background:#1a5cf5;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-weight:500;font-size:14px;margin:16px 0}
   </style></head><body><div class="c"><div class="h"><div class="logo"><div class="lb"><span class="lt">T</span></div><div><div class="br">TIXSYNC SOLUTIONS</div><div class="tg">Enterprise Digital Solutions</div></div></div></div>
-  <div class="title">${title}</div><div class="dv"></div>
-  <div class="msg"><p>Hi <span class="hl">${name}</span>,</p><p>${body}</p><p>For urgent matters, contact us directly at <span class="hl">+254 704 440 164</span>.</p></div>
+  <div class="title">${escapeHtml(title)}</div><div class="dv"></div>
+  <div class="msg"><p>Hi <span class="hl">${escapeHtml(name)}</span>,</p><p>${body}</p><p>For urgent matters, contact us directly at <span class="hl">+254 704 440 164</span>.</p></div>
   <div style="text-align:center"><a href="https://tixsyncsolutions.com" class="cta">Visit Our Website</a></div>
   <div class="ft"><p class="ftx">TIXSYNC SOLUTIONS<br>Enterprise Digital Solutions · Cybersecurity · Cloud Infrastructure</p></div></div></body></html>`;
 }

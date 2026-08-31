@@ -21,7 +21,17 @@ export async function POST(request: NextRequest) {
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await request.json();
-    const member = await prisma.teamMember.create({ data: body });
+    const member = await prisma.teamMember.create({
+      data: {
+        name: body.name,
+        role: body.role,
+        bio: body.bio || null,
+        imageUrl: body.imageUrl || null,
+        email: body.email || null,
+        linkedin: body.linkedin || null,
+        order: body.order ?? 0,
+      },
+    });
     return NextResponse.json({ success: true, member }, { status: 201 });
   } catch (error) {
     console.error("Team create error:", error);
@@ -34,8 +44,18 @@ export async function PUT(request: NextRequest) {
     const session = await getServerSession(authOptions);
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { id, ...data } = await request.json();
+    const body = await request.json();
+    const { id, ...rest } = body;
     if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
+
+    const data: Record<string, unknown> = {};
+    if (rest.name !== undefined) data.name = rest.name;
+    if (rest.role !== undefined) data.role = rest.role;
+    if (rest.bio !== undefined) data.bio = rest.bio;
+    if (rest.imageUrl !== undefined) data.imageUrl = rest.imageUrl;
+    if (rest.email !== undefined) data.email = rest.email;
+    if (rest.linkedin !== undefined) data.linkedin = rest.linkedin;
+    if (rest.order !== undefined) data.order = rest.order;
 
     const member = await prisma.teamMember.update({ where: { id }, data });
     return NextResponse.json({ success: true, member });

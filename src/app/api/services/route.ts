@@ -27,7 +27,16 @@ export async function POST(request: NextRequest) {
     if (existing) slug = `${slug}-${Date.now()}`;
 
     const service = await prisma.service.create({
-      data: { ...body, slug, published: body.published ?? true },
+      data: {
+        title: body.title,
+        slug,
+        description: body.description || "",
+        icon: body.icon || null,
+        features: body.features || [],
+        price: body.price || null,
+        published: body.published ?? true,
+        order: body.order ?? 0,
+      },
     });
     return NextResponse.json({ success: true, service }, { status: 201 });
   } catch (error) {
@@ -41,11 +50,22 @@ export async function PUT(request: NextRequest) {
     const session = await getServerSession(authOptions);
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const { id, ...data } = await request.json();
+    const body = await request.json();
+    const { id, ...rest } = body;
     if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
-    if (data.title && !data.slug) {
-      data.slug = slugify(data.title);
+    const data: Record<string, unknown> = {};
+    if (rest.title !== undefined) data.title = rest.title;
+    if (rest.description !== undefined) data.description = rest.description;
+    if (rest.icon !== undefined) data.icon = rest.icon;
+    if (rest.features !== undefined) data.features = rest.features;
+    if (rest.price !== undefined) data.price = rest.price;
+    if (rest.published !== undefined) data.published = rest.published;
+    if (rest.order !== undefined) data.order = rest.order;
+    if (rest.title && !rest.slug) {
+      data.slug = slugify(rest.title);
+    } else if (rest.slug !== undefined) {
+      data.slug = rest.slug;
     }
 
     const service = await prisma.service.update({ where: { id }, data });

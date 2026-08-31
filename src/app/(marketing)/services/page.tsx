@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Hero } from "@/components/public/hero";
 
 export const metadata: Metadata = {
   title: "Enterprise Digital Solutions | Cybersecurity, Web Dev, Cloud",
