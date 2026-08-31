@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ExternalLink, Github, Code, Shield, Cloud, Laptop, Briefcase } from "lucide-react";
 
 type Project = {
@@ -105,10 +106,12 @@ export default function PortfolioDetailPage() {
           <div className="card-glow overflow-hidden">
             <div className={`relative h-64 sm:h-80 bg-gradient-to-br ${catColors[project.category] || "from-surface-700/50 to-surface-800/50"} flex items-center justify-center`}>
               {project.imageUrl ? (
-                <img
+                <Image
                   src={project.imageUrl}
                   alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  priority
                 />
               ) : (
                 <Icon className="h-16 w-16 text-white/20" />
