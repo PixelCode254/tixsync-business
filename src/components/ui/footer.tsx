@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin, MessageCircle, Linkedin, Twitter } from "lucide-react";
 
 const footerLinks = {
@@ -26,8 +27,13 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/10 border border-brand-500/20">
-                <span className="font-mono text-sm font-bold text-brand-400">T</span>
+              <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                <Image
+                  src="/images/logo.png"
+                  alt="TIXSYNC SOLUTIONS"
+                  fill
+                  className="object-contain p-0.5"
+                />
               </div>
               <div>
                 <span className="text-sm font-bold text-white">TIXSYNC</span>

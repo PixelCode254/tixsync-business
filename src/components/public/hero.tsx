@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Shield, Code, Cloud, Lock } from "lucide-react";
 
 const container = {
@@ -19,6 +20,19 @@ export function Hero() {
       <div className="absolute inset-0">
         <div className="absolute top-1/3 left-1/4 h-[600px] w-[600px] rounded-full bg-brand-500/5 blur-[150px]" />
         <div className="absolute bottom-1/4 right-1/4 h-[400px] w-[400px] rounded-full bg-brand-800/5 blur-[120px]" />
+      </div>
+
+      {/* Logo Background */}
+      <div className="absolute inset-0 flex items-center justify-end pointer-events-none">
+        <div className="relative w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] lg:w-[750px] lg:h-[750px] opacity-[0.04] mr-[-5%]">
+          <Image
+            src="/images/logo.png"
+            alt=""
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
       </div>
 
       <div className="section-container relative z-10 pt-32 pb-20">

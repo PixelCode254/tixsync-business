@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -28,8 +29,14 @@ export function Navbar() {
     <header className={cn("glass-nav transition-all duration-300", isScrolled ? "py-3" : "py-5")}>
       <nav className="section-container flex items-center justify-between">
         <Link href="/" className="group flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500/10 border border-brand-500/20 transition-colors group-hover:bg-brand-500/20">
-            <span className="font-mono text-sm font-bold text-brand-400">T</span>
+          <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/5 transition-colors group-hover:border-brand-500/30">
+            <Image
+              src="/images/logo.png"
+              alt="TIXSYNC SOLUTIONS"
+              fill
+              className="object-contain p-0.5"
+              priority
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-bold tracking-wide text-white">TIXSYNC</span>
