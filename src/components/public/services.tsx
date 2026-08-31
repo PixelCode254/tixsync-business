@@ -15,10 +15,10 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 const fallback: Service[] = [
-  { id: "1", title: "Cybersecurity", slug: "cybersecurity", icon: "Shield",
+  { id: "1", title: "Cybersecurity", slug: "security", icon: "Shield",
     description: "Comprehensive security assessments, penetration testing, and ongoing threat monitoring for enterprise environments.",
     features: ["Penetration Testing", "Vulnerability Assessment", "SOC Setup", "Compliance (ISO 27001, PCI-DSS)"], price: "From KES 150,000" },
-  { id: "2", title: "Web Development", slug: "web-development", icon: "Code",
+  { id: "2", title: "Web Development", slug: "web", icon: "Code",
     description: "Custom enterprise web applications built with modern frameworks, optimized for performance and security.",
     features: ["Full-Stack Applications", "E-Commerce Platforms", "API Development", "Performance Optimization"], price: "From KES 200,000" },
   { id: "3", title: "Cloud Infrastructure", slug: "cloud", icon: "Cloud",
@@ -27,6 +27,9 @@ const fallback: Service[] = [
   { id: "4", title: "Digital Transformation", slug: "digital", icon: "Laptop",
     description: "End-to-end digital strategy and implementation to modernize your business operations.",
     features: ["Process Automation", "Legacy System Modernization", "Data Analytics", "Staff Training"], price: "Custom" },
+  { id: "5", title: "Consulting", slug: "consulting", icon: "Briefcase",
+    description: "Strategic technology guidance for business leaders, including CTO-as-a-Service and architecture advisory.",
+    features: ["Technology Strategy", "Architecture Advisory", "Vendor Evaluation", "CTO-as-a-Service"], price: "Custom" },
 ];
 
 export function Services() {
@@ -59,32 +62,34 @@ export function Services() {
           {services.map((s, i) => {
             const Icon = iconMap[s.icon || "Code"] || Code;
             return (
-              <motion.div key={s.id} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="card-glow p-8 hover:border-white/10 transition-all group">
-                <div className="flex items-start gap-5 mb-6">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 border border-brand-500/10 group-hover:bg-brand-500/20 transition-colors">
-                    <Icon className="h-5 w-5 text-brand-400" />
+              <Link key={s.id} href={`/services/${s.slug}`} className="block h-full">
+                <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="card-glow p-8 hover:border-white/10 transition-all group h-full">
+                  <div className="flex items-start gap-5 mb-6">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-500/10 border border-brand-500/10 group-hover:bg-brand-500/20 transition-colors">
+                      <Icon className="h-5 w-5 text-brand-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">{s.title}</h3>
+                      <p className="text-sm text-surface-400 leading-relaxed">{s.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-1">{s.title}</h3>
-                    <p className="text-sm text-surface-400 leading-relaxed">{s.description}</p>
+                  <ul className="space-y-2 mb-6">
+                    {s.features.map(f => (
+                      <li key={f} className="flex items-center gap-2 text-sm text-surface-300">
+                        <div className="h-1 w-1 rounded-full bg-brand-500 shrink-0" />{f}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                    <span className="text-sm font-semibold text-brand-400">{s.price || "Custom"}</span>
+                    <span className="flex items-center gap-1 text-sm text-surface-400 hover:text-white transition-colors group/l">
+                      Learn more <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/l:translate-x-1" />
+                    </span>
                   </div>
-                </div>
-                <ul className="space-y-2 mb-6">
-                  {s.features.map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-surface-300">
-                      <div className="h-1 w-1 rounded-full bg-brand-500 shrink-0" />{f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                  <span className="text-sm font-semibold text-brand-400">{s.price || "Custom"}</span>
-                  <Link href="/contact" className="flex items-center gap-1 text-sm text-surface-400 hover:text-white transition-colors group/l">
-                    Request quote <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/l:translate-x-1" />
-                  </Link>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             );
           })}
         </div>
