@@ -19,6 +19,7 @@ export async function middleware(request: NextRequest) {
     const isPublicGet = request.method === "GET" && publicGetRoutes.some(r => pathname.startsWith(r));
     const isContactPost = pathname.startsWith("/api/contact") && request.method === "POST";
     const isContactReply = pathname.startsWith("/api/contact/reply") && request.method === "POST";
+    const isChatPost = pathname === "/api/chat" && request.method === "POST";
     const isAuthRoute = pathname.startsWith("/api/auth");
 
     // Server-to-server with valid API key bypasses session auth
@@ -26,7 +27,7 @@ export async function middleware(request: NextRequest) {
     const validApiKey = process.env.API_SECRET_KEY;
     const hasValidApiKey = apiKey && validApiKey && apiKey === validApiKey;
 
-    if (isMutation && !isPublicGet && !isContactPost && !isContactReply && !isAuthRoute && !hasValidApiKey) {
+    if (isMutation && !isPublicGet && !isContactPost && !isContactReply && !isChatPost && !isAuthRoute && !hasValidApiKey) {
       const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
       if (!token) {
         return NextResponse.json(
