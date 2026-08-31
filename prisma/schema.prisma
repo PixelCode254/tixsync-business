@@ -114,6 +114,7 @@ model ContactMessage {
   message   String
   service   String?
   budget    String?
+  source    String   @default("form")
   read      Boolean  @default(false)
   archived  Boolean  @default(false)
   replied   Boolean  @default(false)

@@ -73,18 +73,18 @@ export function Footer() {
               {[
                 { icon: Linkedin, href: "https://linkedin.com/in/corneliusmaina", label: "LinkedIn" },
                 { icon: Twitter, href: "https://twitter.com/corneliusmaina", label: "Twitter" },
-                { icon: MessageCircle, href: "https://wa.me/254704440164", label: "WhatsApp" },
+                { icon: MessageCircle, href: "https://wa.me/254704440164?text=Hello%20TIXSYNC!%20I'd%20like%20to%20know%20more%20about%20your%20services.", label: "WhatsApp" },
               ].map(({ icon: Icon, href, label }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/5 text-surface-500 hover:border-white/10 hover:text-white transition-all">
+                  className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/5 text-surface-500 hover:border-[#25D366]/30 hover:text-[#25D366] transition-all">
                   <Icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
               <p className="text-xs text-surface-500 mb-2">Quick inquiry?</p>
-              <a href="https://wa.me/254704440164?subject=Enterprise%20Inquiry" target="_blank" rel="noopener noreferrer"
-                className="text-sm font-medium text-brand-400 hover:text-brand-300 transition-colors">
+              <a href="https://wa.me/254704440164?text=Hello%20TIXSYNC!%20I'd%20like%20to%20know%20more%20about%20your%20services." target="_blank" rel="noopener noreferrer"
+                className="text-sm font-medium text-[#25D366] hover:text-[#20bd5a] transition-colors">
                 Message us on WhatsApp →
               </a>
             </div>
