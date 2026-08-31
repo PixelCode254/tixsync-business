@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <h1 className="font-display text-4xl sm:text-5xl font-bold tracking-tight mb-4">
         <span className="text-gradient">Privacy Policy</span>
       </h1>
-      <p className="text-sm text-surface-500 mb-12">Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
+      <p className="text-sm text-surface-500 mb-12">Last updated: August 31, 2026</p>
 
       <div className="space-y-12 text-surface-300 leading-relaxed">
         <section>

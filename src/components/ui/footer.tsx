@@ -101,11 +101,12 @@ export function Footer() {
       <div className="border-t border-white/5">
         <div className="section-container py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-surface-600">
-            © {new Date().getFullYear()} TIXSYNC SOLUTIONS. All rights reserved.
+            © 2026 TIXSYNC SOLUTIONS. All rights reserved.
           </p>
           <div className="flex gap-4 text-xs text-surface-600">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <a href="https://github.com/PixelCode254" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
           </div>
         </div>
       </div>

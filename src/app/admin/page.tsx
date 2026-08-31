@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FolderOpen, MessageSquare, Users, Briefcase } from "lucide-react";
+import { FolderOpen, MessageSquare, Users, Briefcase, FileText } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminDashboard() {
@@ -27,6 +27,7 @@ export default function AdminDashboard() {
     { label: "Projects", value: stats.projects, icon: FolderOpen, href: "/admin/projects", color: "text-blue-400", bg: "bg-blue-500/10" },
     { label: "Messages", value: stats.messages, icon: MessageSquare, href: "/admin/messages", color: "text-emerald-400", bg: "bg-emerald-500/10" },
     { label: "Unread", value: stats.unread, icon: MessageSquare, href: "/admin/messages?filter=unread", color: "text-amber-400", bg: "bg-amber-500/10" },
+    { label: "Blog", value: null, icon: FileText, href: "/admin/blog", color: "text-purple-400", bg: "bg-purple-500/10" },
   ];
 
   return (
@@ -43,7 +44,7 @@ export default function AdminDashboard() {
                 <c.icon className={`h-5 w-5 ${c.color}`} />
               </div>
             </div>
-            <p className="text-2xl font-bold text-white">{c.value}</p>
+            <p className="text-2xl font-bold text-white">{c.value ?? "—"}</p>
             <p className="text-sm text-surface-500">{c.label}</p>
           </Link>
         ))}
@@ -54,6 +55,7 @@ export default function AdminDashboard() {
           <Link href="/admin/services" className="btn-primary text-sm"><Briefcase className="h-4 w-4" /> Manage Services</Link>
           <Link href="/admin/projects" className="btn-outline text-sm"><FolderOpen className="h-4 w-4" /> Manage Projects</Link>
           <Link href="/admin/messages" className="btn-outline text-sm"><MessageSquare className="h-4 w-4" /> View Messages</Link>
+          <Link href="/admin/blog" className="btn-outline text-sm"><FileText className="h-4 w-4" /> Blog</Link>
           <Link href="/" className="btn-outline text-sm">View Live Site</Link>
         </div>
       </div>

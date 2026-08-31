@@ -26,6 +26,7 @@ export const metadata: Metadata = {
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "TIXSYNC SOLUTIONS" }],
   },
   twitter: { card: "summary_large_image", title: "TIXSYNC SOLUTIONS", description: "Enterprise Digital Solutions." },
+  icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

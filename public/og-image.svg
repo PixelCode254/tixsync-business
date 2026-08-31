@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0d1117"/>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#grad)" opacity="0.15"/>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5cf5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1117;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  <rect x="60" y="60" width="80" height="80" rx="16" fill="rgba(26,92,245,0.1)" stroke="rgba(26,92,245,0.3)" stroke-width="1"/>
+  <text x="100" y="112" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="36" fill="#1a5cf5">T</text>
+  <text x="160" y="95" font-family="system-ui,sans-serif" font-weight="700" font-size="28" fill="#ffffff">TIXSYNC</text>
+  <text x="160" y="120" font-family="system-ui,sans-serif" font-weight="500" font-size="12" fill="#868e96" letter-spacing="3">SOLUTIONS</text>
+  <text x="60" y="240" font-family="system-ui,sans-serif" font-weight="700" font-size="48" fill="#ffffff">Enterprise Digital</text>
+  <text x="60" y="300" font-family="system-ui,sans-serif" font-weight="700" font-size="48" fill="#1a5cf5">Solutions</text>
+  <text x="60" y="360" font-family="system-ui,sans-serif" font-weight="400" font-size="20" fill="#868e96">Web Development · Cybersecurity · Cloud Infrastructure</text>
+  <text x="60" y="580" font-family="system-ui,sans-serif" font-weight="400" font-size="16" fill="#495057">tixsyncsolutions.com</text>
+</svg>
