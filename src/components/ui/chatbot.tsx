@@ -128,6 +128,20 @@ function detectLanguage(text: string): string {
   if (/[\u1200-\u137f]/.test(text)) return "am";
   if (/[\u10a0-\u10ff]/.test(text)) return "ka";
   if (/[\u0530-\u058f]/.test(text)) return "hy";
+  const wordHits: [string, string[]][] = [
+    ["es", ["que", "como", "donde", "para", "con", "puedo", "quiero", "servicios", "cuanto", "tienen", "informacion"]],
+    ["fr", ["comment", "pourquoi", "pour", "avec", "dans", "mais", "je", "nous", "faire", "services", "combien"]],
+    ["pt", ["como", "onde", "para", "com", "mas", "eu", "nos", "posso", "quero", "servicos", "quanto"]],
+    ["de", ["wie", "was", "wo", "warum", "fur", "mit", "aber", "ich", "wir", "konnen", "dienstleistungen", "bitte"]],
+    ["it", ["come", "dove", "perche", "per", "con", "io", "noi", "posso", "voglio", "servizi", "quanto"]],
+    ["nl", ["wat", "hoe", "waar", "waarom", "voor", "met", "maar", "ik", "wij", "kunnen", "diensten"]],
+    ["tr", ["ne", "nasil", "nerede", "neden", "icin", "ile", "ama", "ben", "biz", "hizmetler", "var"]],
+  ];
+  for (const [lang, words] of wordHits) {
+    let hits = 0;
+    for (const w of words) { if (lower.includes(w)) hits++; }
+    if (hits >= 2) return lang;
+  }
   return "en";
 }
 

@@ -166,6 +166,15 @@ export function detectLanguage(text: string): LangCode {
   if (charDetected) return charDetected;
 
   const wordPatterns: [LangCode, string[]][] = [
+    ["es", ["que", "como", "donde", "cuando", "porque", "para", "con", "este", "esta", "puedo", "quiero", "necesito", "servicios", "puedes", "cuanto", "tienen", "informacion"]],
+    ["fr", ["que", "comment", "pourquoi", "pour", "avec", "dans", "mais", "cette", "ceci", "je", "nous", "vous", "faire", "peux", "voulez", "avez", "services", "combien"]],
+    ["pt", ["que", "como", "onde", "porque", "para", "com", "mas", "esta", "isso", "eu", "nos", "voce", "posso", "quero", "servicos", "quanto", "tem"]],
+    ["de", ["wie", "was", "wo", "warum", "fur", "mit", "aber", "diese", "ich", "wir", "sie", "konnen", "mochten", "haben", "dienstleistungen", "wie viel", "bitte"]],
+    ["it", ["che", "come", "dove", "perche", "per", "con", "senza", "ma", "questo", "io", "noi", "voi", "posso", "voglio", "servizi", "quanto", "avete"]],
+    ["nl", ["wat", "hoe", "waar", "waarom", "voor", "met", "maar", "deze", "ik", "wij", "jij", "kunnen", "willen", "hebben", "diensten", "hoeveel", "graag"]],
+    ["tr", ["ne", "nasil", "nerede", "neden", "icin", "ile", "ama", "bu", "ben", "biz", "siz", "yapabilirim", "istiyorum", "hizmetler", "kac", "var"]],
+    ["pl", ["co", "jak", "gdzie", "dlaczego", "dla", "z", "ale", "ten", "ja", "my", "wy", "mogę", "chcę", "uslugi", "ile", "mają", "prosze"]],
+    ["ru", ["chto", "kak", "gde", "pochemu", "dlya", "s", "no", "etot", "ya", "my", "vy", "mogu", "khotyu", "uslugi", "skolko", "est"]],
     ["sw", ["ndio", "hapana", "asante", "samahani", "tafadhali", "kwa nini", "je", "wapi", "nini", "vipi", "sawa", "nzuri"]],
     ["yo", ["bawo ni", "o dabo", "o se", "mo wa", "ka lo", "pele", "mo fe"]],
     ["ha", ["eh", "ina", "yaya", "to", "ba", "ko", "ka", "ai", "wa", "na", "ki", "zan"]],
