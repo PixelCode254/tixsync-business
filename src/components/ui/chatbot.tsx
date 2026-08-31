@@ -128,19 +128,20 @@ function detectLanguage(text: string): string {
   if (/[\u1200-\u137f]/.test(text)) return "am";
   if (/[\u10a0-\u10ff]/.test(text)) return "ka";
   if (/[\u0530-\u058f]/.test(text)) return "hy";
-  const wordHits: [string, string[]][] = [
-    ["es", ["que", "como", "donde", "para", "con", "puedo", "quiero", "servicios", "cuanto", "tienen", "informacion"]],
-    ["fr", ["comment", "pourquoi", "pour", "avec", "dans", "mais", "je", "nous", "faire", "services", "combien"]],
-    ["pt", ["como", "onde", "para", "com", "mas", "eu", "nos", "posso", "quero", "servicos", "quanto"]],
-    ["de", ["wie", "was", "wo", "warum", "fur", "mit", "aber", "ich", "wir", "konnen", "dienstleistungen", "bitte"]],
-    ["it", ["come", "dove", "perche", "per", "con", "io", "noi", "posso", "voglio", "servizi", "quanto"]],
-    ["nl", ["wat", "hoe", "waar", "waarom", "voor", "met", "maar", "ik", "wij", "kunnen", "diensten"]],
-    ["tr", ["ne", "nasil", "nerede", "neden", "icin", "ile", "ama", "ben", "biz", "hizmetler", "var"]],
+  const wordHits: [string, string[], number][] = [
+    ["sw", ["kazi", "kujua", "kuhusu", "huduma", "bei", "jinsi", "kampuni", "wasiliana", "namna", "ndio", "hapana", "asante", "samahani", "tafadhali", "nini", "wapi", "vipi", "sawa", "nzuri", "yake", "wake", "hapa", "pia", "haraka", "karibu"], 1],
+    ["es", ["que", "como", "donde", "para", "con", "puedo", "quiero", "servicios", "cuanto", "tienen", "informacion"], 2],
+    ["fr", ["comment", "pourquoi", "pour", "avec", "dans", "mais", "je", "nous", "faire", "services", "combien"], 2],
+    ["pt", ["como", "onde", "para", "com", "mas", "eu", "nos", "posso", "quero", "servicos", "quanto"], 2],
+    ["de", ["wie", "was", "wo", "warum", "fur", "mit", "aber", "ich", "wir", "konnen", "dienstleistungen", "bitte"], 2],
+    ["it", ["come", "dove", "perche", "per", "con", "io", "noi", "posso", "voglio", "servizi", "quanto"], 2],
+    ["nl", ["wat", "hoe", "waar", "waarom", "voor", "met", "maar", "ik", "wij", "kunnen", "diensten"], 2],
+    ["tr", ["ne", "nasil", "nerede", "neden", "icin", "ile", "ama", "ben", "biz", "hizmetler", "var"], 2],
   ];
-  for (const [lang, words] of wordHits) {
+  for (const [lang, words, threshold] of wordHits) {
     let hits = 0;
     for (const w of words) { if (lower.includes(w)) hits++; }
-    if (hits >= 2) return lang;
+    if (hits >= threshold) return lang;
   }
   return "en";
 }

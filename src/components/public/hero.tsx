@@ -46,7 +46,7 @@ export function Hero() {
             <span className="text-brand-400 font-medium">enterprise-grade cybersecurity</span>,{" "}
             <span className="text-brand-400 font-medium">web development</span>, and{" "}
             <span className="text-brand-400 font-medium">cloud infrastructure</span>{" "}
-            to businesses across Africa. We protect what matters most.
+            to businesses worldwide. We protect what matters most.
           </motion.p>
 
           <motion.div variants={item} className="flex flex-wrap gap-4 mb-16">
