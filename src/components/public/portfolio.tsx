@@ -67,36 +67,37 @@ export function Portfolio() {
             return (
               <motion.div key={p.id} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.1 }} className="group">
-                <div className="card-glow h-full hover:border-white/10 transition-all">
-                  <div className={`relative h-48 rounded-t-xl bg-gradient-to-br ${catColors[p.category] || "from-surface-700/50 to-surface-800/50"} flex items-center justify-center`}>
-                    <Icon className="h-10 w-10 text-white/30" />
-                    {p.featured && (
-                      <div className="absolute top-3 left-3">
-                        <span className="rounded-md bg-brand-500/90 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">Featured</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] text-surface-400">{catLabels[p.category]}</span>
-                    </div>
-                    <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-brand-300 transition-colors">{p.title}</h3>
-                    <p className="text-sm text-surface-400 leading-relaxed line-clamp-3 mb-4">{p.description}</p>
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {p.techStack.slice(0, 4).map(t => (
-                        <span key={t} className="rounded-md bg-white/5 px-2 py-1 text-[11px] text-surface-400">{t}</span>
-                      ))}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {p.liveUrl && (
-                        <a href={p.liveUrl} target="_blank" rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-sm text-brand-400 hover:text-brand-300 transition-colors">
-                          <ExternalLink className="h-3.5 w-3.5" /> Live
-                        </a>
+                <Link href={`/portfolio/${p.slug}`} className="block h-full">
+                  <div className="card-glow h-full hover:border-white/10 transition-all">
+                    <div className={`relative h-48 rounded-t-xl bg-gradient-to-br ${catColors[p.category] || "from-surface-700/50 to-surface-800/50"} flex items-center justify-center`}>
+                      <Icon className="h-10 w-10 text-white/30" />
+                      {p.featured && (
+                        <div className="absolute top-3 left-3">
+                          <span className="rounded-md bg-brand-500/90 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">Featured</span>
+                        </div>
                       )}
                     </div>
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] text-surface-400">{catLabels[p.category]}</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-brand-300 transition-colors">{p.title}</h3>
+                      <p className="text-sm text-surface-400 leading-relaxed line-clamp-3 mb-4">{p.description}</p>
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {p.techStack.slice(0, 4).map(t => (
+                          <span key={t} className="rounded-md bg-white/5 px-2 py-1 text-[11px] text-surface-400">{t}</span>
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {p.liveUrl && (
+                          <span className="flex items-center gap-1 text-sm text-brand-400 hover:text-brand-300 transition-colors">
+                            <ExternalLink className="h-3.5 w-3.5" /> Live
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             );
           })}

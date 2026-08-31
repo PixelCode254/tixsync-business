@@ -8,6 +8,14 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const featured = searchParams.get("featured");
+    const slug = searchParams.get("slug");
+
+    if (slug) {
+      const project = await prisma.project.findUnique({ where: { slug } });
+      if (!project) return NextResponse.json({ error: "Not found" }, { status: 404 });
+      return NextResponse.json({ project });
+    }
+
     const where: Record<string, unknown> = { published: true };
     if (featured === "true") where.featured = true;
 
