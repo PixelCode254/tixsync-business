@@ -545,6 +545,19 @@ TIXSYNC SOLUTIONS architects cloud environments that are secure, scalable, and c
     }
   }
 
+  // ─── Testimonials ──────────────────────────────────
+  const testimonialData = [
+    { name: "James Kariuki", role: "CTO, FinSecure Bank", content: "TIXSYNC transformed our security posture. Their penetration testing identified vulnerabilities that our internal team had missed for years. Enterprise-grade work.", rating: 5, order: 1 },
+    { name: "Sarah Wanjiku", role: "VP Engineering, EastTel", content: "The cloud migration was seamless. Zero downtime, 40% cost reduction. TIXSYNC's team understood our complex requirements from day one.", rating: 5, order: 2 },
+    { name: "David Mwangi", role: "CEO, SafeHomes Africa", content: "Professional, thorough, and results-driven. Their cybersecurity audit gave us the confidence to scale our operations nationally.", rating: 5, order: 3 },
+    { name: "Grace Nyambura", role: "Director, KINAPSA", content: "TIXSYNC delivered our digital transformation project on time and under budget. Their enterprise approach is what sets them apart.", rating: 5, order: 4 },
+  ];
+
+  await prisma.testimonial.createMany({
+    data: testimonialData,
+    skipDuplicates: true,
+  });
+
   console.log("Seed complete. Admin login: admin@tixsyncsolutions.com / Admin@12345");
 }
 
