@@ -23,8 +23,8 @@ export function Hero() {
       </div>
 
       {/* Logo Background */}
-      <div className="absolute inset-0 flex items-center justify-end pointer-events-none">
-        <div className="relative w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] lg:w-[750px] lg:h-[750px] opacity-[0.04] mr-[-5%]">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="relative w-[80vw] h-[80vh] max-w-[1200px] opacity-[0.04]">
           <Image
             src="/images/logo.png"
             alt=""
