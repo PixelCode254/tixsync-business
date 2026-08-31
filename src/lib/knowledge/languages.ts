@@ -165,8 +165,83 @@ export function detectLanguage(text: string): LangCode {
   const charDetected = detectByCharRange(text);
   if (charDetected) return charDetected;
 
+  const swWords = [
+    "watu", "serikali", "kazi", "mwaka", "wakati", "mji", "rais", "mataifa",
+    "uchaguzi", "kwenye", "amani", "usalama", "shirika", "mambo", "mpya",
+    "viongozi", "kimataifa", "nje", "kiongozi", "kubwa", "dunia", "tangu",
+    "wiki", "kabla", "polisi", "mashariki", "vita", "taifa", "mpango",
+    "haki", "tena", "baraza", "mkono", "nafasi", "kazi", "zamani", "raia",
+    "kufanya", "wengine", "ndani", "taarifa", "wengi", "umoja", "magharibi",
+    "chini", "bado", "fedha", "njia", "sana", "bila", "sababu", "sheria",
+    "muhimu", "mbali", "mtu", "kuna", "maeneo", "kutoa", "anasema", "mwisho",
+    "tayari", "alikuwa", "tatu", "matokeo", "mahakama", "utawala", "ripoti",
+    "idadi", "nguvu", "vikosi", "sehemu", "masuala", "suala", "hakuna",
+    "watoto", "maisha", "uchumi", "kiasi", "asilimia", "wenye", "mwenye",
+    "wote", "mbele", "kupata", "biashara", "ulinzi", "kali", "mkataba",
+    "kiuchumi", "huru", "nyumbani", "kampuni", "mafuta", "mapema", "kufikia",
+    "sita", "ajili", "muungano", "tarehe", "misaada", "wanachama", "uhuru",
+    "wanawake", "rasmi", "kutumia", "jambo", "yote", "nyingine", "sera",
+    "maendeleo", "yenye", "kuanza", "katiba", "kituo", "hatari", "mabadiliko",
+    "siasa", "miezi", "vikwazo", "mgogoro", "jamii", "wazi", "msaada",
+    "nyingi", "mpaka", "binadamu", "uhusiano", "tume", "wananchi", "wizara",
+    "msimu", "shughuli", "kutaka", "lengo", "kiwango", "kupitia", "michezo",
+    "matumaini", "hapa", "kesi", "lazima", "mazingira", "vijana", "nini",
+    "maji", "aina", "kupiga", "bora", "tofauti", "kwenda", "mbaya",
+    "ushirikiano", "ujumbe", "matatizo", "kesho", "sawa", "usiku", "uongozi",
+    "wafanyakazi", "maelfu", "wito", "wasiwasi", "mchezo", "basi", "nusu",
+    "moto", "afya", "yoyote", "jinsi", "chakula", "mrefu", "uwezo",
+    "haraka", "kawaida", "nyuma", "mengi", "ardhi", "maalum", "mwingine",
+    "kuongeza", "changamoto", "dakika", "baadaye", "kifo", "mamlaka",
+    "kutafuta", "kutokea", "jumla", "kuliko", "mtandao", "kuwepo", "kuweka",
+    "jina", "maana", "bilioni", "ulimwengu", "kijamii", "mashabiki",
+    "mafanikio", "mbalimbali", "maarufu", "ishara", "kujaribu", "taratibu",
+    "kuomba", "kujenga", "ushahidi", "mipaka", "wataalamu", "tajiri",
+    "utulivu", "visa", "hukumu", "rekodi", "kutetea", "wanafunzi", "kibiashara",
+    "mawasiliano", "kujitoa", "mafunzo", "anaweza", "kupatikana", "ndogo",
+    "mchakato", "sauti", "elimu", "kujenga", "kuunda", "kanisa", "picha",
+    "nyumba", "jirani", "barabara", "bei", "vituo", "kitaifa", "ugonjwa",
+    "kushiriki", "jiwe", "uhusiano", "mzunguko", "hatua", "safari", "simu",
+    "mfano", "familia", "jengo", "hati", "mwananchi", "tuma", "tembea",
+    "soma", "jua", "elewa", "leta", "peleka", "sikia", "heshimu", "penda",
+    "chagua", "anza", "maliza", "simama", "kaa", "ndio", "hapana", "asante",
+    "samahani", "tafadhali", "kwa nini", "je", "wapi", "vipi", "nzuri",
+    "yake", "wake", "pia", "bado", "karibu", "tafuta", "omba", "kujua",
+    "kuhusu", "huduma", "wasiliana", "namna", "chochote", "kila", "mara",
+    "siku", "mwezi", "sasa", "baada", "juu", "ndani", "nje", "mbali",
+  ];
+  const enWords = [
+    "the", "is", "are", "was", "were", "have", "has", "had", "do", "does",
+    "did", "will", "would", "could", "should", "may", "might", "can", "shall",
+    "what", "how", "when", "where", "who", "which", "why", "this", "that",
+    "these", "those", "and", "but", "or", "nor", "not", "so", "if", "than",
+    "too", "very", "just", "about", "also", "here", "there", "then", "now",
+    "all", "each", "every", "both", "few", "more", "most", "other", "some",
+    "such", "only", "own", "same", "its", "my", "your", "his", "her", "our",
+    "their", "me", "him", "us", "them", "mine", "yours", "hers", "ours",
+    "theirs", "myself", "yourself", "himself", "itself", "ourselves", "yourselves",
+    "from", "with", "into", "through", "during", "before", "after", "above",
+    "below", "between", "under", "again", "further", "once", "here", "there",
+    "when", "where", "why", "how", "all", "any", "both", "each", "few",
+    "more", "most", "other", "some", "such", "no", "nor", "not", "only",
+    "own", "same", "so", "than", "too", "very", "s", "t", "don", "now",
+    "i", "you", "he", "she", "it", "we", "they", "want", "need", "know",
+    "think", "look", "find", "give", "tell", "say", "make", "go", "come",
+    "take", "get", "see", "use", "try", "ask", "work", "seem", "feel",
+    "leave", "call", "good", "new", "first", "last", "long", "great",
+    "little", "right", "high", "old", "different", "big", "large", "next",
+    "early", "young", "important", "public", "bad", "same", "able",
+  ];
+
+  for (const w of swWords) {
+    if (lower.includes(w)) return "sw";
+  }
+  let enHits = 0;
+  for (const w of enWords) {
+    if (lower.includes(w)) enHits++;
+  }
+  if (enHits >= 2) return "en";
+
   const wordPatterns: [LangCode, string[], number][] = [
-    ["sw", ["ndio", "hapana", "asante", "samahani", "tafadhali", "kwa nini", "je", "wapi", "nini", "vipi", "sawa", "nzuri", "kazi", "kujua", "kuhusu", "huduma", "bei", "jinsi", "kampuni", "wasiliana", "namna", "chochote", "yake", "wake", "kwenye", "hapa", "pia", "bado", "haraka", "karibu", "tafuta", "omba", "soma", "jua", "elewa", "fanya", "leta", "peleka", "ona", "sikia", "heshimu", "penda", "chagua", "anza", "maliza", "simama", "kaa", "tembea", "run",  "uncia",  "kila",  "mara",  "siku",  "wiki",  "mwezi",  "mwaka",  "sasa",  "baada",  "mbele",  "nyuma",  "juu",  "chini",  "ndani",  "nje",  "karibu",  "mbali"], 2],
     ["es", ["que", "como", "donde", "cuando", "porque", "para", "con", "este", "esta", "puedo", "quiero", "necesito", "servicios", "puedes", "cuanto", "tienen", "informacion"], 2],
     ["fr", ["que", "comment", "pourquoi", "pour", "avec", "dans", "mais", "cette", "ceci", "je", "nous", "vous", "faire", "peux", "voulez", "avez", "services", "combien"], 2],
     ["pt", ["que", "como", "onde", "porque", "para", "com", "mas", "esta", "isso", "eu", "nos", "voce", "posso", "quero", "servicos", "quanto", "tem"], 2],

@@ -128,8 +128,56 @@ function detectLanguage(text: string): string {
   if (/[\u1200-\u137f]/.test(text)) return "am";
   if (/[\u10a0-\u10ff]/.test(text)) return "ka";
   if (/[\u0530-\u058f]/.test(text)) return "hy";
+  const swWords = [
+    "watu", "serikali", "kazi", "mwaka", "wakati", "mji", "rais", "mataifa",
+    "uchaguzi", "kwenye", "amani", "usalama", "shirika", "mambo", "mpya",
+    "viongozi", "kimataifa", "nje", "kiongozi", "kubwa", "dunia", "tangu",
+    "wiki", "kabla", "polisi", "mashariki", "vita", "taifa", "mpango",
+    "haki", "tena", "baraza", "mkono", "nafasi", "zamani", "raia",
+    "kufanya", "wengine", "ndani", "taarifa", "wengi", "umoja", "magharibi",
+    "chini", "bado", "fedha", "njia", "sana", "bila", "sababu", "sheria",
+    "muhimu", "mbali", "mtu", "kuna", "maeneo", "kutoa", "anasema", "mwisho",
+    "tayari", "alikuwa", "tatu", "matokeo", "mahakama", "utawala", "ripoti",
+    "idadi", "nguvu", "vikosi", "sehemu", "masuala", "suala", "hakuna",
+    "watoto", "maisha", "uchumi", "kiasi", "asilimia", "wenye", "mwenye",
+    "wote", "mbele", "kupata", "biashara", "ulinzi", "kali", "mkataba",
+    "kiuchumi", "huru", "nyumbani", "kampuni", "mafuta", "mapema", "kufikia",
+    "sita", "ajili", "muungano", "tarehe", "misaada", "wanachama", "uhuru",
+    "wanawake", "rasmi", "kutumia", "jambo", "yote", "nyingine", "sera",
+    "maendeleo", "yenye", "kuanza", "katiba", "kituo", "hatari", "mabadiliko",
+    "siasa", "miezi", "vikwazo", "mgogoro", "jamii", "wazi", "msaada",
+    "nyingi", "mpaka", "binadamu", "uhusiano", "tume", "wananchi", "wizara",
+    "msimu", "shughuli", "kutaka", "lengo", "kiwango", "kupitia", "michezo",
+    "matumaini", "hapa", "kesi", "lazima", "mazingira", "vijana", "nini",
+    "maji", "aina", "kupiga", "bora", "tofauti", "kwenda", "mbaya",
+    "ushirikiano", "ujumbe", "matatizo", "kesho", "sawa", "usiku", "uongozi",
+    "wafanyakazi", "maelfu", "wito", "wasiwasi", "mchezo", "basi", "nusu",
+    "moto", "afya", "yoyote", "jinsi", "chakula", "mrefu", "uwezo",
+    "haraka", "kawaida", "nyuma", "mengi", "ardhi", "maalum", "mwingine",
+    "kuongeza", "changamoto", "dakika", "baadaye", "kifo", "mamlaka",
+    "kutafuta", "kutokea", "jumla", "kuliko", "mtandao", "kuwepo", "kuweka",
+    "jina", "maana", "bilioni", "ulimwengu", "kijamii", "mashabiki",
+    "mafanikio", "mbalimbali", "maarufu", "ishara", "kujaribu", "taratibu",
+    "kuomba", "kujenga", "ushahidi", "mipaka", "wataalamu", "tajiri",
+    "utulivu", "visa", "hukumu", "rekodi", "kutetea", "wanafunzi", "kibiashara",
+    "mawasiliano", "kujitoa", "mafunzo", "anaweza", "kupatikana", "ndogo",
+    "mchakato", "sauti", "elimu", "kuunda", "kanisa", "picha",
+    "nyumba", "jirani", "barabara", "bei", "vituo", "kitaifa", "ugonjwa",
+    "kushiriki", "jiwe", "uhusiano", "mzunguko", "hatua", "safari", "simu",
+    "mfano", "familia", "jengo", "hati", "mwananchi", "tuma", "tembea",
+    "soma", "jua", "elewa", "leta", "peleka", "sikia", "heshimu", "penda",
+    "chagua", "anza", "maliza", "simama", "kaa", "ndio", "hapana", "asante",
+    "samahani", "tafadhali", "kwa nini", "je", "wapi", "vipi", "nzuri",
+    "yake", "wake", "pia", "bado", "karibu", "tafuta", "omba", "kujua",
+    "kuhusu", "huduma", "wasiliana", "namna", "chochote", "kila", "mara",
+    "siku", "mwezi", "sasa", "baada", "juu", "ndani", "nje", "mbali",
+  ];
+  for (const w of swWords) { if (lower.includes(w)) return "sw"; }
+  const enWords = ["the","is","are","was","were","have","has","had","do","does","did","will","would","could","should","may","might","can","what","how","when","where","who","which","why","this","that","and","but","or","not","so","if","too","very","just","about","also","here","there","then","now","all","each","every","both","few","more","most","other","some","my","your","his","her","our","their","me","him","us","them","from","with","into","through","during","before","after","i","you","he","she","it","we","they","want","need","know","think","look","find","give","tell","say","make","go","come","take","get","see","use","try","ask","work"];
+  let enHits = 0;
+  for (const w of enWords) { if (lower.includes(w)) enHits++; }
+  if (enHits >= 2) return "en";
   const wordHits: [string, string[], number][] = [
-    ["sw", ["kazi", "kujua", "kuhusu", "huduma", "bei", "jinsi", "kampuni", "wasiliana", "namna", "ndio", "hapana", "asante", "samahani", "tafadhali", "nini", "wapi", "vipi", "sawa", "nzuri", "yake", "wake", "hapa", "pia", "haraka", "karibu"], 1],
     ["es", ["que", "como", "donde", "para", "con", "puedo", "quiero", "servicios", "cuanto", "tienen", "informacion"], 2],
     ["fr", ["comment", "pourquoi", "pour", "avec", "dans", "mais", "je", "nous", "faire", "services", "combien"], 2],
     ["pt", ["como", "onde", "para", "com", "mas", "eu", "nos", "posso", "quero", "servicos", "quanto"], 2],
